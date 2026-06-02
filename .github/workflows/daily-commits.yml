@@ -1,0 +1,30 @@
+name: Daily commits
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # daily at 00:00 UTC
+  workflow_dispatch:
+
+jobs:
+  make-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Configure git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Run daily commits script
+        env:
+          # If set, overrides random 4-5 commits. Otherwise script picks 4 or 5.
+          # COMMITS: 4
+          SLEEP_MIN: 30
+          SLEEP_MAX: 900
+        run: |
+          chmod +x .github/scripts/daily_commits.sh
+          .github/scripts/daily_commits.sh
