@@ -1,0 +1,46 @@
+name: build
+on:
+  push:
+    paths-ignore:
+      - '.github/scripts/**'
+      - 'activity_*.log'
+  pull_request:
+    paths-ignore:
+      - '.github/scripts/**'
+      - 'activity_*.log'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: pip install flake8
+      - name: Lint
+        run: |
+          if [ -f contribute.py ]; then
+            echo "Running flake8 on contribute.py"
+            flake8 contribute.py
+          else
+            echo "contribute.py not found — skipping lint for contribute.py"
+          fi
+
+          if [ -f test_contribute.py ]; then
+            echo "Running flake8 on test_contribute.py"
+            flake8 test_contribute.py
+          else
+            echo "test_contribute.py not found — skipping lint for tests"
+          fi
+      - name: Test for commits
+        run: |
+          if [ -f test_contribute.py ]; then
+            python -m unittest test_contribute
+          else
+            echo "test_contribute.py not found — skipping unit tests"
+          fi
