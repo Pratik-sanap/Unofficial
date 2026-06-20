@@ -18,7 +18,10 @@ def main(def_args=sys.argv[1:]):
     if repository is not None:
         start = repository.rfind('/') + 1
         end = repository.rfind('.')
-        directory = repository[start:end]
+        if end != -1 and end > start:
+            directory = repository[start:end]
+        else:
+            directory = repository[start:]
     no_weekends = args.no_weekends
     frequency = args.frequency
     days_before = args.days_before
