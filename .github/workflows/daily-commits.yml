@@ -18,8 +18,8 @@ jobs:
 
       - name: Configure git user
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Pratik-sanap"
+          git config user.email "oes1910b@gmail.com"
 
       - name: Run daily commits script
         env:

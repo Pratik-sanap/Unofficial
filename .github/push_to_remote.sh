@@ -7,8 +7,8 @@ REMOTE="https://github.com/Pratik-sanap/Unofficial.git"
 rm -rf "$CLONE_DIR" || true
 git clone "$REMOTE" "$CLONE_DIR"
 cd "$CLONE_DIR"
-git config user.name "GitHub Actions Bot" || true
-git config user.email "41898282+github-actions[bot]@users.noreply.github.com" || true
+git config user.name "Pratik-sanap" || true
+git config user.email "oes1910b@gmail.com" || true
 rm -rf .github || true
 cp -r "$REPO_ROOT/.github" .
 git add .github
